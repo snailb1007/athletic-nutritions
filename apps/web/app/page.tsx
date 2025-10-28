@@ -1,7 +1,9 @@
 import { Button } from "@repo/ui/button";
+import type { ComponentType, SVGProps } from "react";
+import { getFeaturedFoods, type FoodSummary } from "../lib/foods";
 import styles from "./page.module.css";
 
-type IconProps = React.SVGProps<SVGSVGElement>;
+type IconProps = SVGProps<SVGSVGElement>;
 
 const HomeIcon = ({ className, ...props }: IconProps) => (
   <svg
@@ -126,70 +128,21 @@ const NAV_ITEMS = [
   },
 ];
 
-const FOOD_ITEMS = [
-  {
-    name: "Yến mạch matcha năng lượng",
-    description:
-      "Bữa sáng giàu chất xơ với matcha, yến mạch cán dẹt và hạt chia giúp duy trì năng lượng bền bỉ.",
-    calories: 320,
-    protein: "14g protein",
-    carbs: "45g carb sạch",
-    fats: "9g chất béo tốt",
-    tag: "Khởi động ngày mới",
-  },
-  {
-    name: "Taco đậu đen phục hồi",
-    description:
-      "Kết hợp đậu đen, bơ và salsa xoài, cung cấp chất chống oxy hóa sau buổi tập cường độ cao.",
-    calories: 410,
-    protein: "18g protein",
-    carbs: "48g carb phức",
-    fats: "14g chất béo tốt",
-    tag: "Sau buổi tập",
-  },
-  {
-    name: "Sinh tố maca – cacao",
-    description:
-      "Sinh tố hương cacao với chuối đông lạnh, bơ hạnh nhân và maca hỗ trợ phục hồi hệ thần kinh.",
-    calories: 360,
-    protein: "20g protein",
-    carbs: "38g carb",
-    fats: "12g chất béo tốt",
-    tag: "Tăng sức bền",
-  },
-  {
-    name: "Salad đậu gà Địa Trung Hải",
-    description:
-      "Đậu gà, dưa leo, oliu và rau mầm, phủ sốt tahini giàu canxi giúp tối ưu hóa cơ bắp.",
-    calories: 290,
-    protein: "16g protein",
-    carbs: "32g carb",
-    fats: "10g chất béo tốt",
-    tag: "Giờ nghỉ trưa",
-  },
-  {
-    name: "Bowl gạo lứt tempeh",
-    description:
-      "Tempeh ướp xì dầu, gạo lứt và kim chi men vi sinh hỗ trợ tiêu hóa trước giờ thi đấu.",
-    calories: 430,
-    protein: "24g protein",
-    carbs: "50g carb phức",
-    fats: "15g chất béo tốt",
-    tag: "Trước thi đấu",
-  },
-  {
-    name: "Thanh protein bí đỏ",
-    description:
-      "Thanh protein tự làm từ bí đỏ, yến mạch và hạt lanh – nhỏ gọn nhưng nạp đủ dinh dưỡng.",
-    calories: 270,
-    protein: "17g protein",
-    carbs: "28g carb",
-    fats: "8g chất béo tốt",
-    tag: "Snack thông minh",
-  },
-];
+type FoodCard = FoodSummary & {
+  tag: string;
+  description: string;
+};
 
-export default function Home() {
+type FoodStat = {
+  label: string;
+  value: string;
+  Icon: ComponentType<IconProps>;
+};
+
+export default async function Home() {
+  const foods = await getFeaturedFoods(8);
+  const foodCards = foods.map(enrichFood);
+
   return (
     <div className={styles.page}>
       <header className={styles.header}>
@@ -229,9 +182,9 @@ export default function Home() {
               đấu.
             </p>
             <div className={styles.heroActions}>
-              <Button appName="web" className={styles.ctaButton}>
+              <a href="/foods" className={styles.ctaButton}>
                 Khám phá ngay
-              </Button>
+              </a>
               <a className={styles.secondaryAction} href="#download">
                 Xem cách tải ứng dụng
               </a>
@@ -260,51 +213,42 @@ export default function Home() {
           <div className={styles.foodIntro}>
             <h2 id="food-section-title">Danh sách thực phẩm tiêu biểu</h2>
             <p>
-              Lựa chọn được chuyên gia dinh dưỡng thể thao đề xuất, cân bằng
-              giữa năng lượng và phục hồi cho mọi giai đoạn tập luyện.
+              Dữ liệu được đồng bộ trực tiếp từ cơ sở dữ liệu dinh dưỡng công
+              khai, giúp bạn theo dõi nhanh thành phần dinh dưỡng cho từng khẩu
+              phần.
             </p>
           </div>
           <div className={styles.foodGrid}>
-            {FOOD_ITEMS.map((item) => (
-              <article className={styles.foodCard} key={item.name}>
-                <div className={styles.foodMeta}>
-                  <LeafIcon className={styles.foodIcon} />
-                  <span className={styles.foodTag}>{item.tag}</span>
-                </div>
-                <h3>{item.name}</h3>
-                <p className={styles.foodDescription}>{item.description}</p>
-                <dl className={styles.foodStats}>
-                  <div>
-                    <dt>
-                      <FlameIcon className={styles.statIcon} />
-                      Năng lượng
-                    </dt>
-                    <dd>{item.calories} kcal</dd>
-                  </div>
-                  <div>
-                    <dt>
-                      <SparkIcon className={styles.statIcon} />
-                      Protein
-                    </dt>
-                    <dd>{item.protein}</dd>
-                  </div>
-                  <div>
-                    <dt>
-                      <SparkIcon className={styles.statIcon} />
-                      Carb
-                    </dt>
-                    <dd>{item.carbs}</dd>
-                  </div>
-                  <div>
-                    <dt>
-                      <SparkIcon className={styles.statIcon} />
-                      Chất béo
-                    </dt>
-                    <dd>{item.fats}</dd>
-                  </div>
-                </dl>
-              </article>
-            ))}
+            {foodCards.length > 0 ? (
+              foodCards.map((item) => {
+                const stats = buildStats(item);
+                return (
+                  <article className={styles.foodCard} key={item.id}>
+                    <div className={styles.foodMeta}>
+                      <LeafIcon className={styles.foodIcon} />
+                      <span className={styles.foodTag}>{item.tag}</span>
+                    </div>
+                    <h3>{item.name}</h3>
+                    <p className={styles.foodDescription}>{item.description}</p>
+                    <dl className={styles.foodStats}>
+                      {stats.map(({ label, value, Icon }) => (
+                        <div key={label}>
+                          <dt>
+                            <Icon className={styles.statIcon} />
+                            {label}
+                          </dt>
+                          <dd>{value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </article>
+                );
+              })
+            ) : (
+              <p className={styles.foodEmptyState}>
+                Dữ liệu đang được đồng bộ từ kho dinh dưỡng.
+              </p>
+            )}
           </div>
         </section>
 
@@ -338,4 +282,108 @@ export default function Home() {
       </main>
     </div>
   );
+}
+
+function enrichFood(food: FoodSummary): FoodCard {
+  return {
+    ...food,
+    tag: buildTag(food),
+    description: buildDescription(food),
+  };
+}
+
+function buildStats(food: FoodSummary): FoodStat[] {
+  return [
+    {
+      label: "Năng lượng",
+      value: formatStat(food.energyKcal, "kcal"),
+      Icon: FlameIcon,
+    },
+    {
+      label: "Protein",
+      value: formatStat(food.proteinGrams, "g"),
+      Icon: SparkIcon,
+    },
+    {
+      label: "Carb",
+      value: formatStat(food.carbsGrams, "g"),
+      Icon: SparkIcon,
+    },
+    {
+      label: "Chất béo",
+      value: formatStat(food.fatGrams, "g"),
+      Icon: SparkIcon,
+    },
+    {
+      label: "Chất xơ",
+      value: formatStat(food.fiberGrams, "g"),
+      Icon: LeafIcon,
+    },
+  ];
+}
+
+function buildTag(food: FoodSummary): string {
+  if (food.proteinGrams !== null && food.proteinGrams >= 18) {
+    return "Phục hồi cơ bắp";
+  }
+
+  if (food.carbsGrams !== null && food.carbsGrams >= 45) {
+    return "Nạp năng lượng";
+  }
+
+  if (food.fiberGrams !== null && food.fiberGrams >= 5) {
+    return "Giàu chất xơ";
+  }
+
+  if (food.fatGrams !== null && food.fatGrams <= 5) {
+    return "Nhẹ bụng";
+  }
+
+  return "Cân bằng mỗi ngày";
+}
+
+function buildDescription(food: FoodSummary): string {
+  const label =
+    food.englishName && food.englishName !== food.name
+      ? `Tên quốc tế: ${food.englishName}.`
+      : "Nguồn thực phẩm bản địa.";
+
+  const metrics: string[] = [];
+
+  if (food.energyKcal !== null) {
+    metrics.push(`${formatNumber(food.energyKcal, 0)} kcal`);
+  }
+
+  if (food.proteinGrams !== null) {
+    metrics.push(`${formatNumber(food.proteinGrams, 1)}g protein`);
+  }
+
+  if (food.carbsGrams !== null) {
+    metrics.push(`${formatNumber(food.carbsGrams, 1)}g carb`);
+  }
+
+  if (metrics.length > 2) {
+    metrics.splice(2);
+  }
+
+  const highlight = metrics.length
+    ? `Cung cấp ${metrics.join(", ")} cho mỗi 100g.`
+    : "Thông tin dinh dưỡng đang được cập nhật.";
+
+  return `${label} ${highlight}`;
+}
+
+function formatStat(value: number | null, unit: string): string {
+  if (value === null) {
+    return "Đang cập nhật";
+  }
+
+  return `${formatNumber(value, unit === "kcal" ? 0 : 1)} ${unit}`;
+}
+
+function formatNumber(value: number, decimals: number): string {
+  return value.toLocaleString("vi-VN", {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  });
 }

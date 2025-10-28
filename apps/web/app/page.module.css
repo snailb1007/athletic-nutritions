@@ -177,6 +177,8 @@
 }
 
 .ctaButton {
+  display: inline-block;
+  text-decoration: none;
   border: none;
   border-radius: 999px;
   background: linear-gradient(120deg, var(--accent), #0ea5e9);
@@ -273,6 +275,17 @@
   display: grid;
   gap: 24px;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.foodEmptyState {
+  grid-column: 1 / -1;
+  padding: 32px;
+  border-radius: 24px;
+  border: 1px dashed var(--outline);
+  background: var(--surface);
+  color: var(--muted);
+  text-align: center;
+  font-weight: 500;
 }
 
 .foodCard {
