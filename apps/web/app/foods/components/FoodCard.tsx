@@ -14,46 +14,46 @@ export function FoodCard({ food }: FoodCardProps) {
   };
 
   return (
-    <article className="bg-white border border-gray-200 rounded-lg p-6 transition-shadow hover:shadow-lg">
-      <div className="flex justify-between items-start gap-4 mb-3">
-        <h3 className="text-lg font-semibold text-gray-900 flex-1">
+    <article className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900">
+      <div className="mb-4 flex items-start justify-between gap-4">
+        <h3 className="flex-1 text-lg font-semibold text-gray-900 dark:text-gray-100">
           {food.nameLocal || food.name}
         </h3>
         {food.category && (
-          <span className="inline-block px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm whitespace-nowrap">
+          <span className="inline-flex whitespace-nowrap rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-600 dark:bg-gray-800 dark:text-gray-300">
             {food.category}
           </span>
         )}
       </div>
 
       {food.nameLocal && food.name !== food.nameLocal && (
-        <p className="text-gray-600 text-sm mb-4 italic">{food.name}</p>
+        <p className="mb-4 text-sm italic text-gray-600 dark:text-gray-400">{food.name}</p>
       )}
 
-      <dl className="grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-3 my-4">
-        <div className="flex flex-col gap-1">
-          <dt className="text-sm text-gray-600 font-medium">Năng lượng</dt>
-          <dd className="text-base text-gray-900 font-semibold">{formatNutrient(nutrients.energy, "kcal")}</dd>
+      <dl className="my-4 grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-4">
+        <div className="flex flex-col gap-2">
+          <dt className="text-sm font-medium text-gray-600 dark:text-gray-300">Năng lượng</dt>
+          <dd className="text-base font-semibold text-gray-900 dark:text-gray-50">{formatNutrient(nutrients.energy, "kcal")}</dd>
         </div>
-        <div className="flex flex-col gap-1">
-          <dt className="text-sm text-gray-600 font-medium">Protein</dt>
-          <dd className="text-base text-gray-900 font-semibold">{formatNutrient(nutrients.protein, "g")}</dd>
+        <div className="flex flex-col gap-2">
+          <dt className="text-sm font-medium text-gray-600 dark:text-gray-300">Protein</dt>
+          <dd className="text-base font-semibold text-gray-900 dark:text-gray-50">{formatNutrient(nutrients.protein, "g")}</dd>
         </div>
-        <div className="flex flex-col gap-1">
-          <dt className="text-sm text-gray-600 font-medium">Carbohydrate</dt>
-          <dd className="text-base text-gray-900 font-semibold">{formatNutrient(nutrients.carbs, "g")}</dd>
+        <div className="flex flex-col gap-2">
+          <dt className="text-sm font-medium text-gray-600 dark:text-gray-300">Carbohydrate</dt>
+          <dd className="text-base font-semibold text-gray-900 dark:text-gray-50">{formatNutrient(nutrients.carbs, "g")}</dd>
         </div>
-        <div className="flex flex-col gap-1">
-          <dt className="text-sm text-gray-600 font-medium">Chất béo</dt>
-          <dd className="text-base text-gray-900 font-semibold">{formatNutrient(nutrients.fat, "g")}</dd>
+        <div className="flex flex-col gap-2">
+          <dt className="text-sm font-medium text-gray-600 dark:text-gray-300">Chất béo</dt>
+          <dd className="text-base font-semibold text-gray-900 dark:text-gray-50">{formatNutrient(nutrients.fat, "g")}</dd>
         </div>
-        <div className="flex flex-col gap-1">
-          <dt className="text-sm text-gray-600 font-medium">Chất xơ</dt>
-          <dd className="text-base text-gray-900 font-semibold">{formatNutrient(nutrients.fiber, "g")}</dd>
+        <div className="flex flex-col gap-2">
+          <dt className="text-sm font-medium text-gray-600 dark:text-gray-300">Chất xơ</dt>
+          <dd className="text-base font-semibold text-gray-900 dark:text-gray-50">{formatNutrient(nutrients.fiber, "g")}</dd>
         </div>
       </dl>
 
-      <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-200 text-sm text-gray-600">
+      <div className="mt-4 flex items-center justify-between border-t border-gray-200 pt-4 text-sm text-gray-600 dark:border-gray-800 dark:text-gray-300">
         <span className="font-medium">Trên 100g</span>
         {food.source && (
           <span className="italic">Nguồn: {food.source}</span>

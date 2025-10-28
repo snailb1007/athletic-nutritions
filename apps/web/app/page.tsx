@@ -1,5 +1,5 @@
-import { Button } from "@repo/ui/button";
-import type { ComponentType, SVGProps } from "react";
+//import { Button } from "@repo/ui/button";
+import { use, type ComponentType, type SVGProps } from "react";
 import { getFeaturedFoods, type FoodSummary } from "../lib/foods";
 import styles from "./page.module.css";
 
@@ -230,17 +230,17 @@ export default async function Home() {
                     </div>
                     <h3>{item.name}</h3>
                     <p className={styles.foodDescription}>{item.description}</p>
-                    <dl className={styles.foodStats}>
+                    <div className={styles.foodStats}>
                       {stats.map(({ label, value, Icon }) => (
                         <div key={label}>
-                          <dt>
+                          <div>
                             <Icon className={styles.statIcon} />
                             {label}
-                          </dt>
-                          <dd>{value}</dd>
+                          </div>
+                          <div>{value}</div>
                         </div>
                       ))}
-                    </dl>
+                    </div>
                   </article>
                 );
               })
