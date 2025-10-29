@@ -1,114 +1,16 @@
 //import { Button } from "@repo/ui/button";
-import { use, type ComponentType, type SVGProps } from "react";
+import { type ComponentType } from "react";
 import { getFeaturedFoods, type FoodSummary } from "../lib/foods";
+import {
+  HomeIcon,
+  DownloadIcon,
+  InfoIcon,
+  LeafIcon,
+  FlameIcon,
+  SparkIcon,
+  type IconProps,
+} from "./components/icons";
 import styles from "./page.module.css";
-
-type IconProps = SVGProps<SVGSVGElement>;
-
-const HomeIcon = ({ className, ...props }: IconProps) => (
-  <svg
-    aria-hidden="true"
-    className={className}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={1.8}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <path d="M3 11L12 4l9 7" />
-    <path d="M6 10v10h5v-5h2v5h5V10" />
-  </svg>
-);
-
-const DownloadIcon = ({ className, ...props }: IconProps) => (
-  <svg
-    aria-hidden="true"
-    className={className}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={1.8}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <path d="M12 4v11" />
-    <path d="m7.5 11.5 4.5 4.5 4.5-4.5" />
-    <path d="M5 20h14" />
-  </svg>
-);
-
-const InfoIcon = ({ className, ...props }: IconProps) => (
-  <svg
-    aria-hidden="true"
-    className={className}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={1.8}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <circle cx="12" cy="12" r="8.5" />
-    <path d="M12 11v5" />
-    <path d="M12 8h.01" />
-  </svg>
-);
-
-const LeafIcon = ({ className, ...props }: IconProps) => (
-  <svg
-    aria-hidden="true"
-    className={className}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={1.6}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <path d="M19 5c0 9-6 15-14 15 0-8 6-15 14-15Z" />
-    <path d="M7 19c0-4.5 3.5-8 8.5-9.5" />
-  </svg>
-);
-
-const FlameIcon = ({ className, ...props }: IconProps) => (
-  <svg
-    aria-hidden="true"
-    className={className}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={1.8}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <path d="M12 3c2 3 3 4.4 3 6.2a3 3 0 0 1-6 0c0-1.2.4-2.3 1-3.2" />
-    <path d="M9 13a4.5 4.5 0 0 0 6 4.2" />
-  </svg>
-);
-
-const SparkIcon = ({ className, ...props }: IconProps) => (
-  <svg
-    aria-hidden="true"
-    className={className}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={1.8}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <path d="m12 3 .7 3.3L16 8l-3.3 1.7L12 13l-.7-3.3L8 8l3.3-1.7Z" />
-    <path d="m6 14 .4 1.8L8 17l-1.6.8L6 20l-.4-2.2L4 17l1.6-.2Z" />
-    <path d="m18 12 .5 2.2L21 15l-2.5.8L18 18l-.5-2.2L15 15l2.5-.8Z" />
-  </svg>
-);
 
 const NAV_ITEMS = [
   {
